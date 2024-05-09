@@ -24,4 +24,4 @@ COPY tools/index.html /usr/share/nginx/html/index.html
 EXPOSE 443
 
 # run ngnix as a foreground process
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "-t", "daemon off;"]

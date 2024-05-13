@@ -1,0 +1,53 @@
+networks:
+  inception:
+    name: net
+
+services:
+  nginx:
+    build: ./requirements/nginx
+    restart: always
+    container_name: nginx
+    ports:
+      - "443:443"
+    networks:
+      - net
+    depends_on:
+      - wordpress
+  
+  wordpress:
+    build: ./requirements/wordpress
+    container_name: wordpress
+    restart: always
+    ports:
+      - "9000:9000"
+    networks:
+      - net
+    environment:
+      - DOMAIN_NAME=${DOMAIN_NAME}
+      - DB_HOST=${DB_HOST}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - ROOT_PASSWORD=${ROOT_PASSWORD}
+      - WP_USER=${WP_USER}
+      - WP_PASSWORD=${WP_PASSWORD}
+    depends_on:
+      - mariadb
+
+  mariadb:
+    build: ./requirements/mariadb
+    restart: always
+    container_name: mariadb
+    ports:
+      - "3306:3306"
+    networks:
+      - net
+    environment:
+      - DOMAIN_NAME=${DOMAIN_NAME}
+      - DB_HOST=${DB_HOST}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - ROOT_PASSWORD=${ROOT_PASSWORD}
+      - WP_USER=${WP_USER}
+      - WP_PASSWORD=${WP_PASSWORD}

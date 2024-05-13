@@ -1,14 +1,14 @@
 FROM debian:bookworm-slim
 
 # Prep
-RUN apt-get update
-RUN apt-get install -y \
+RUN apt-get update &&
+	apt-get install -y \
 	nginx \
 	openssl
 
 # SSL Setup
-RUN mkdir /etc/nginx/ssl
-RUN openssl req -x509 -nodes -days 31 -newkey rsa:2048 \
+RUN mkdir /etc/nginx/ssl &&
+	openssl req -x509 -nodes -days 31 -newkey rsa:2048 \
 	-keyout /etc/nginx/ssl/nginx.key \
 	-out /etc/nginx/ssl/nginx.crt \
 	-subj "/CN=kglebows.42.fr"

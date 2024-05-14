@@ -3,7 +3,7 @@
 echo "mariadb.sh -> Checking if the database is already initialized..."
 if [ ! -d "/var/lib/mysql/wordpress" ]; then
     echo "mariadb.sh -> Database not found, initializing new database setup..."
-    mysql_install_db --user=root --datadir=/var/lib/mysql
+    mysql_install_db --user=mysql --datadir=/var/lib/mysql
 
     echo "mariadb.sh -> Starting MariaDB server in the background..."
     mysqld_safe --datadir="/var/lib/mysql" &
@@ -23,10 +23,11 @@ if [ ! -d "/var/lib/mysql/wordpress" ]; then
     
     # if [ -f "/usr/local/bin/mariadb.sql" ]; then
         echo "mariadb.sh -> Executing SQL setup script..."
-        mysql --user=root --password="$MYSQL_ROOT_PASSWORD" < /usr/local/bin/startup.sql
-        mysql --user="$MYSQL_USER" --password="MYSQL_PASSWORD" < /usr/local/bin/startup.sql
-        mariadb --user=root --password="$MYSQL_ROOT_PASSWORD" < /usr/local/bin/startup.sql
-        mariadb --user="$MYSQL_USER" --password="$MYSQL_PASSWORD" < /usr/local/bin/startup.sql
+        mysql --user=mysql < /usr/local/bin/startup.sql
+        mariadb --user=mysql < /usr/local/bin/startup.sql
+        # mysql --user="$MYSQL_USER" --password="MYSQL_PASSWORD" < /usr/local/bin/startup.sql
+        # mariadb --user=root --password="$MYSQL_ROOT_PASSWORD" < /usr/local/bin/startup.sql
+        # mariadb --user="$MYSQL_USER" --password="$MYSQL_PASSWORD" < /usr/local/bin/startup.sql
     # fi
 
     echo "mariadb.sh -> Initial setup complete, stopping MariaDB..."

@@ -8,7 +8,8 @@ RUN apt-get update && \
     apt-get install -y mariadb-server mariadb-client && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir -p /var/run/mysqld /var/log/mysql && \
-    chown -R mysql:mysql /var/run/mysqld /var/log/mysql
+    chown -R mysql:mysql /var/run/mysqld /var/log/mysql && \
+    chmod -R 755 /var/lib/mysql
 
 ENV DEBIAN_FRONTEND newt
 
@@ -19,7 +20,7 @@ COPY tools/startup.sql /usr/local/bin/startup.sql
 COPY tools/mariadb.sh /usr/local/bin/mariadb.sh
 
 # Set permissions and ensure the startup script is executable
-RUN chmod +x /usr/local/bin/mariadb.sh
+RUN chmod 755 /usr/local/bin/mariadb.sh
 
 # Expose the default MariaDB port
 EXPOSE 3306

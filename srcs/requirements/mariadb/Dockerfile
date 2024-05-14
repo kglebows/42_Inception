@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # Install necessary packages and configure environment
 RUN apt-get update && \
-    apt-get install -y mariadb mariadb-client openrc && \
+    apt-get install -y mariadb-server mariadb-client openrc && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir -p /var/run/mysqld /var/log/mysql && \
     chown -R mysql:mysql /var/run/mysqld /var/log/mysql && \

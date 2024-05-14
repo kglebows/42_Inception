@@ -20,7 +20,7 @@ RUN apt-get update && \
     # php8.2-zip \
     # php8.2-soap \
     # php8.2-imap \
-    # php8.2-mysqli \
+    php8.2-mysqli \
     # php8.2-curl \
     # php8.2-xml \
     # php8.2-intl \

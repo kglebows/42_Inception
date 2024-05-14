@@ -4,8 +4,9 @@ FROM debian:bookworm-slim
 WORKDIR /var/www/html
 
 # Update package lists and install PHP and necessary extensions for WordPress
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && \
     apt-get install -y --no-install-recommends apt-utils && \
+    apt-get install -y \
     php \
     php-fpm \
     php-mysqli \

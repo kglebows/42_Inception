@@ -21,10 +21,10 @@ if [ ! -d "/var/lib/mysql/wordpress" ]; then
     sed -i "s/##DB_USER##/$MYSQL_USER/g" /usr/local/bin/startup.sql
     sed -i "s/##DB_PASSWORD##/$MYSQL_PASSWORD/g" /usr/local/bin/startup.sql
     
-    if [ -f "/usr/local/bin/mariadb.sql" ]; then
+    # if [ -f "/usr/local/bin/mariadb.sql" ]; then
         echo "mariadb.sh -> Executing SQL setup script..."
         mysql --bootstrap -uroot < /usr/local/bin/startup.sql
-    fi
+    # fi
 
     echo "mariadb.sh -> Initial setup complete, stopping MariaDB..."
     if ! kill -s TERM "$pid" || ! wait "$pid"; then

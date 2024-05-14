@@ -15,10 +15,10 @@ if ! wp core is-installed --path="/var/www/html" --allow-root; then
     # Install WordPress using the database credentials for the admin account
     wp core install --url="$DOMAIN_NAME" --title="Inception" --admin_user="$MYSQL_USER" --admin_password="$MYSQL_PASSWORD" --admin_email="kglebows@42.fr" --path="/var/www/html" --allow-root
 
-    echo "wordpress.sh -> Time to make it official..."
+    # echo "wordpress.sh -> Time to make it official..."
     # Ensure the site URL is correct
-    wp option update home "https://$DOMAIN_NAME" --path="/var/www/html" --allow-root
-    wp option update siteurl "https://$DOMAIN_NAME" --path="/var/www/html" --allow-root
+    # wp option update home "https://$DOMAIN_NAME" --path="/var/www/html" --allow-root
+    # wp option update siteurl "https://$DOMAIN_NAME" --path="/var/www/html" --allow-root
 
     # echo "wordpress.sh -> Tuning things up, setting debug mode for dev..."
     # wp config set WP_DEBUG true --raw --path="/var/www/html" --allow-root
@@ -27,6 +27,7 @@ if ! wp core is-installed --path="/var/www/html" --allow-root; then
     echo "wordpress.sh -> Adding a dash of user spice..."
     # Create a new WordPress user with given credentials
     wp user create "$WP_USER" user@42.fr --role=author --user_pass="$WP_PASSWORD" --path="/var/www/html" --allow-root
+	wp theme install --allow-root dark-mode --activate
 
     echo "wordpress.sh -> All set! WordPress is installed and configured!"
 else

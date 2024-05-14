@@ -10,18 +10,18 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
     # apt-get install -y --no-install-recommends apt-utils && \
     apt-get install -y \
-    php \
-    php-fpm \
-    php-mysqli \
-    php-json \
-    php-curl \
-    php-xml \
-    php-intl \
-    php-dom \
-    php-xmlreader \
-    php-ctype \
-    php-mbstring \
-    php-gd \
+    php8.2 \
+    php8.2-fpm \
+    php8.2-mysqli \
+    php8.2-json \
+    php8.2-curl \
+    php8.2-xml \
+    php8.2-intl \
+    php8.2-dom \
+    php8.2-xmlreader \
+    php8.2-ctype \
+    php8.2-mbstring \
+    php8.2-gd \
     curl \
     wget && \
     rm -rf /var/lib/apt/lists/*
@@ -40,7 +40,7 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
     && mv wp-cli.phar /usr/local/bin/wp
 
 # Configure PHP-FPM
-COPY conf/www.conf /etc/php/fpm/pool.d/www.conf
+COPY conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 COPY tools/wordpress.sh /usr/local/bin/wordpress.sh
 
 RUN chmod +x /usr/local/bin/wordpress.sh
@@ -53,4 +53,4 @@ ENTRYPOINT ["/usr/local/bin/wordpress.sh"]
 
 EXPOSE 9000
 
-CMD ["php-fpm", "-F"]
+CMD ["php-fpm8.2", "-F"]

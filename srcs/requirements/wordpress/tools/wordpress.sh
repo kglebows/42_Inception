@@ -32,4 +32,4 @@ fi
 
 echo "wordpress.sh -> Over and out! Passing the baton to PHP-FPM..."
 # Hand over control to PHP-FPM to keep the container running
-exec php-fpm
+# exec php8.2-fpm

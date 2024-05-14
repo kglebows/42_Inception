@@ -3,9 +3,6 @@ FROM debian:bookworm-slim
 # Set working directory
 WORKDIR /var/www/html
 
-ENV DEBIAN_FRONTEND noninteractive
-
-
 # Update package lists and install PHP and necessary extensions for WordPress
 RUN apt-get update && \
     # apt-get install -y --no-install-recommends apt-utils && \
@@ -35,8 +32,6 @@ RUN apt-get update && \
     wget && \
     rm -rf /var/lib/apt/lists/*
 
-ENV DEBIAN_FRONTEND newt
-
 # Install WordPress
 RUN wget https://wordpress.org/latest.tar.gz \
     && tar -xzf latest.tar.gz \
@@ -54,7 +49,6 @@ COPY tools/wordpress.sh /usr/local/bin/wordpress.sh
 
 RUN chmod 755 /usr/local/bin/wordpress.sh
 
-RUN mkdir -p /var/www/wordpress
 # Set ownership/permissions
 RUN chown -R www-data:www-data /var/www/ \
     && chmod -R 755 /var/www/ && chown -R www-data:www-data /var/log

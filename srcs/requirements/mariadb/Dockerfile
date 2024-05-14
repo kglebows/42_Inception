@@ -2,6 +2,7 @@ FROM debian:bookworm-slim
 
 # Install necessary packages and configure environment
 RUN apt-get update && \
+    apt-get install -y --no-install-recommends apt-utils && \
     apt-get install -y mariadb-server mariadb-client && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir -p /var/run/mysqld /var/log/mysql && \

@@ -2,6 +2,7 @@ FROM debian:bookworm-slim
 
 # Prep
 RUN apt-get update && \
+	apt-get install -y --no-install-recommends apt-utils && \
 	apt-get install -y \
 	nginx \
 	openssl
@@ -10,7 +11,7 @@ RUN apt-get update && \
 RUN mkdir /etc/nginx/ssl && \
 	openssl req -x509 -nodes -days 31 -newkey rsa:2048 \
 	-keyout /etc/nginx/ssl/nginx.key \
-	-out /etc/nginx/ssl/nginx.crt \
+	-out /etc/nginx/ssml/nginx.crt \
 	-subj "/CN=kglebows.42.fr"
 
 # Conf Setup

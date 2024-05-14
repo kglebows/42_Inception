@@ -5,7 +5,7 @@ WORKDIR /var/www/html
 
 # Update package lists and install PHP and necessary extensions for WordPress
 RUN apt-get update && apt-get install -y \
-    apt-utils \
+    apt-get install -y --no-install-recommends apt-utils && \
     php \
     php-fpm \
     php-mysqli \

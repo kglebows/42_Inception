@@ -22,7 +22,7 @@ fclean: clean
 	-docker network rm $(sh docker network ls -q)
 
 subject:
-	docker stop $(docker ps -qa); docker rm $(docker ps -qa); docker rmi -f $(docker images -qa); docker volume rm $(docker volume ls -q); docker network rm $(docker network ls -q) 2>/dev/null
+	docker stop $(sh docker ps -qa); docker rm $(sh docker ps -qa); docker rmi -f $(sh docker images -qa); docker volume rm $(sh docker volume ls -q); docker network rm $(sh docker network ls -q) 2>/dev/null
 
 re: fclean build up
 

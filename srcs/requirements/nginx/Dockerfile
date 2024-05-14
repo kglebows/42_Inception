@@ -1,8 +1,5 @@
 FROM debian:bookworm-slim
 
-ENV DEBIAN_FRONTEND noninteractive
-
-
 # Prep
 RUN apt-get update && \
 	apt-get install -y \
@@ -12,8 +9,6 @@ RUN apt-get update && \
 	procps && \
 	rm /etc/nginx/sites-available/default && \
 	rm /etc/nginx/sites-enabled/default
-
-	ENV DEBIAN_FRONTEND newt
 
 
 # SSL Setup

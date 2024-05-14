@@ -15,6 +15,7 @@ clean:
 	docker-compose -f ./srcs/docker-compose.yml down --rmi all --volumes --remove-orphans
 
 fclean: clean
+	rm -rf /home/kglebows/data
 	-docker stop $$(docker ps -qa)
 	-docker rm $$(docker ps -qa)
 	-docker rmi -f $$(docker images -q)

@@ -5,13 +5,12 @@ WORKDIR /var/www/html
 
 ENV DEBIAN_FRONTEND noninteractive
 
+
 # Update package lists and install PHP and necessary extensions for WordPress
 RUN apt-get update && \
+    # apt-get install -y --no-install-recommends apt-utils && \
     apt-get install -y \
 	mariadb-client \
-    curl \
-	sendmail \
-	procps \
     php8.2 \
     php8.2-fpm \
     php8.2-common \
@@ -30,6 +29,9 @@ RUN apt-get update && \
     php8.2-ctype \
     php8.2-mbstring \
     php8.2-gd \
+    curl \
+	sendmail \
+	procps \
     wget && \
     rm -rf /var/lib/apt/lists/*
 
@@ -52,6 +54,7 @@ COPY tools/wordpress.sh /usr/local/bin/wordpress.sh
 
 RUN chmod 755 /usr/local/bin/wordpress.sh
 
+RUN mkdir -p /var/www/wordpress
 # Set ownership/permissions
 RUN chown -R www-data:www-data /var/www/ \
     && chmod -R 755 /var/www/ && chown -R www-data:www-data /var/log

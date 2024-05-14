@@ -1,11 +1,11 @@
 -- Create the WordPress database
-CREATE DATABASE IF NOT EXISTS `##WP_DB_NAME##`;
+CREATE DATABASE IF NOT EXISTS `##DB_NAME##`;
 
 -- Create a new user specifically for WordPress
-CREATE USER '##WP_USERNAME##'@'%' IDENTIFIED BY '##WP_DB_PASSWORD##';
+CREATE USER '##DB_USER##'@'%' IDENTIFIED BY '##DB_PASSWORD##';
 
 -- Grant all privileges on the WordPress database to the new user
-GRANT ALL PRIVILEGES ON `##WP_DB_NAME##`.* TO '##WP_USERNAME##'@'%';
+GRANT ALL PRIVILEGES ON `##DB_NAME##`.* TO '##DB_USER##'@'%';
 
 -- Flush privileges to ensure that the changes take effect
 FLUSH PRIVILEGES;

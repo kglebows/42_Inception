@@ -23,7 +23,10 @@ if [ ! -d "/var/lib/mysql/wordpress" ]; then
     
     # if [ -f "/usr/local/bin/mariadb.sql" ]; then
         echo "mariadb.sh -> Executing SQL setup script..."
-        mysql --user=root < /usr/local/bin/startup.sql
+        mysql --user=root --password="$MYSQL_ROOT_PASSWORD" < /usr/local/bin/startup.sql
+        mysql --user="$MYSQL_USER" --password="MYSQL_PASSWORD" < /usr/local/bin/startup.sql
+        mariadb --user=root --password="$MYSQL_ROOT_PASSWORD" < /usr/local/bin/startup.sql
+        mariadb --user="$MYSQL_USER" --password="$MYSQL_PASSWORD" < /usr/local/bin/startup.sql
     # fi
 
     echo "mariadb.sh -> Initial setup complete, stopping MariaDB..."

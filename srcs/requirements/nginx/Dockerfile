@@ -24,7 +24,7 @@ RUN mkdir /etc/nginx/ssl && \
 	-subj "/CN=kglebows.42.fr"
 
 # Conf Setup
-COPY conf/nginx.conf /etc/nginx/sites-available/default
+COPY conf/default.conf /etc/nginx/sites-available/default
 
 RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default && \
 	chmod 777 /etc/nginx/ssl/* && \

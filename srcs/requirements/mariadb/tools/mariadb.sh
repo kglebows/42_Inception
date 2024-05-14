@@ -1,48 +1,19 @@
 #!/bin/sh
 
-echo "mariadb.sh -> Checking if the database is already initialized..."
-if [ ! -d "/var/lib/mysql/wordpress" ]; then
-    echo "mariadb.sh -> Database not found, initializing new database setup..."
-    mysql_install_db --user=mysql --datadir=/var/lib/mysql
+rc-service mariadb start
 
-    echo "mariadb.sh -> Starting MariaDB server in the background..."
-    mysqld_safe --datadir="/var/lib/mysql" &
-    pid=$!
+while ! mysqladmin ping --silent; do
+    sleep 1
+done
 
-    echo "mariadb.sh -> Waiting for MariaDB to become operational..."
-    while ! mysqladmin ping -h"localhost" --silent; do
-        sleep 1
-        echo -n "."
-    done
-    echo "mariadb.sh -> MariaDB is up and running!"
+mariadb --user=root << EOF
+FLUSH PRIVILEGES;
+CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};
+CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
+GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%';
+FLUSH PRIVILEGES;
+EOF
 
-    echo "mariadb.sh -> Applying initial configurations..."
-    sed -i "s/##DB_NAME##/$MYSQL_DATABASE/g" /usr/local/bin/startup.sql
-    sed -i "s/##DB_USER##/$MYSQL_USER/g" /usr/local/bin/startup.sql
-    sed -i "s/##DB_PASSWORD##/$MYSQL_PASSWORD/g" /usr/local/bin/startup.sql
-    
-    # if [ -f "/usr/local/bin/mariadb.sql" ]; then
-        echo "mariadb.sh -> Executing SQL setup script..."
-        mysql --user=mysql < /usr/local/bin/startup.sql
-        mariadb --user=mysql < /usr/local/bin/startup.sql
-        # mysql --user="$MYSQL_USER" --password="MYSQL_PASSWORD" < /usr/local/bin/startup.sql
-        # mariadb --user=root --password="$MYSQL_ROOT_PASSWORD" < /usr/local/bin/startup.sql
-        # mariadb --user="$MYSQL_USER" --password="$MYSQL_PASSWORD" < /usr/local/bin/startup.sql
-    # fi
+rc-service mariadb stop
 
-    echo "mariadb.sh -> Initial setup complete, stopping MariaDB..."
-    if ! kill -s TERM "$pid" || ! wait "$pid"; then
-        echo >&2 'mariadb.sh -> MariaDB init process failed.'
-        exit 1
-    fi
-    echo "mariadb.sh -> MariaDB initialized successfully and shut down."
-
-    echo "mariadb.sh -> Cleaning up sensitive data..."
-    # rm -f /usr/local/bin/startup.sql
-    # unset MYSQL_DATABASE MYSQL_USER MYSQL_PASSWORD
-else
-    echo "mariadb.sh -> Database already initialized."
-fi
-
-echo "mariadb.sh -> Starting MariaDB in the foreground..."
-# exec mysqld_safe --datadir="/var/lib/mysql"
+exec /usr/bin/mariadbd --user=root --datadir=/var/lib/mysql

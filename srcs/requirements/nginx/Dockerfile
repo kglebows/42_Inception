@@ -22,11 +22,10 @@ RUN mkdir /etc/nginx/ssl && \
 
 
 # Conf Setup
-RUN rm /etc/nginx/sites-available/default
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 # Open port for SSL
 EXPOSE 443
 
 # check config and run ngnix as a foreground process
-CMD nginx -t && nginx -g 'daemon off;'
+CMD ["nginx", "-g", "daemon off;"]

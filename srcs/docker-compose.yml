@@ -56,13 +56,13 @@ services:
 volumes:
   wp-data:
     driver: local
-    driver_opts:
-      type: none
-      device: /home/kglebows/data/wp-data
-      o: bind
+    # driver_opts:
+    #   type: none
+    #   device: /home/kglebows/data/wp-data
+    #   o: bind
   db-data:
     driver: local
-    driver_opts:
-      type: none
-      device: /home/kglebows/data/db-data
-      o: bind
+    # driver_opts:
+    #   type: none
+    #   device: /home/kglebows/data/db-data
+    #   o: bind

@@ -1,5 +1,8 @@
 #!/bin/sh
 
+
+sleep 10
+
 echo "wordpress.sh -> Checking if WordPress is all set..."
 # Inspect the core, if WordPress is already installed
 if ! wp core is-installed --path="/var/www/html" --allow-root; then
@@ -32,4 +35,4 @@ fi
 
 echo "wordpress.sh -> Over and out! Passing the baton to PHP-FPM..."
 # Hand over control to PHP-FPM to keep the container running
-# exec php8.2-fpm
+php-fpm8.2 -F -y /etc/php/8.2/fpm/pool.d/www.conf

@@ -10,6 +10,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
     # apt-get install -y --no-install-recommends apt-utils && \
     apt-get install -y \
+	mariadb-client \
     php8.2 \
     php8.2-fpm \
     php8.2-mysqli \
@@ -42,14 +43,12 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 COPY conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 COPY tools/wordpress.sh /usr/local/bin/wordpress.sh
 
-RUN chmod +x /usr/local/bin/wordpress.sh
+RUN chmod 755 /usr/local/bin/wordpress.sh
 
 # Set ownership/permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
 
-ENTRYPOINT ["/usr/local/bin/wordpress.sh"]
-
 EXPOSE 9000
 
-CMD ["php-fpm8.2", "-F"]
+CMD /usr/local/bin/wordpress.sh

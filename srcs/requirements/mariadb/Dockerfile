@@ -4,20 +4,19 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # Install necessary packages and configure environment
 RUN apt-get update && \
-    apt-get install -y mariadb-server mariadb-client openrc && \
+    # apt-get install -y --no-install-recommends apt-utils && \
+    apt-get install -y mariadb-server mariadb-client && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir -p /var/run/mysqld /var/log/mysql && \
-    chown -R mysql:mysql /var/run/mysqld /var/log/mysql && \
-    chmod -R 755 /var/lib/mysql && \
-    openrc && \
-    touch /run/openrc/softlevel
+    chown -R root:root /var/run/mysqld /var/log/mysql && \
+    chmod -R 755 /var/lib/mysql
 
 ENV DEBIAN_FRONTEND newt
 
 
 # Copy configuration files and scripts
 COPY conf/my.cnf /etc/mysql/mariadb.conf.d/my.cnf
-# COPY tools/startup.sql /usr/local/bin/startup.sql
+COPY tools/startup.sql /usr/local/bin/startup.sql
 COPY tools/mariadb.sh /usr/local/bin/mariadb.sh
 
 # Set permissions and ensure the startup script is executable

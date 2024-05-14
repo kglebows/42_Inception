@@ -22,7 +22,7 @@ RUN mkdir /etc/nginx/ssl && \
 
 
 # Conf Setup
-COPY conf/nginx.conf /etc/nginx/nginx.conf
+COPY conf/default.conf /etc/nginx/sites-enabled/default
 
 # Open port for SSL
 EXPOSE 443

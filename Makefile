@@ -1,8 +1,8 @@
 all: down build up
 
 build:
-	mkdir -p /home/kglebows/data/wp-data
-	mkdir -p /home/kglebows/data/db-data
+	# mkdir -p /home/kglebows/data/wp-data
+	# mkdir -p /home/kglebows/data/db-data
 	docker-compose -f ./srcs/docker-compose.yml build
 
 up:

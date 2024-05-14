@@ -9,15 +9,12 @@ RUN apt-get update && apt-get install -y \
     php-fpm \
     php-mysqli \
     php-json \
-    php-openssl \
     php-curl \
-    php-zlib \
     php-xml \
     php-intl \
     php-dom \
     php-xmlreader \
     php-ctype \
-    php-session \
     php-mbstring \
     php-gd \
     curl \

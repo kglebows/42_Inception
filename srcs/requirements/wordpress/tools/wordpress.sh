@@ -20,9 +20,9 @@ if ! wp core is-installed --path="/var/www/html" --allow-root; then
     wp option update home "https://$DOMAIN_NAME" --path="/var/www/html" --allow-root
     wp option update siteurl "https://$DOMAIN_NAME" --path="/var/www/html" --allow-root
 
-    # echo "wordpress.sh -> Tuning things up, setting debug mode for dev..."
-    # wp config set WP_DEBUG true --raw --path="/var/www/html" --allow-root
-    # wp config set WP_DEBUG_LOG true --raw --path="/var/www/html" --allow-root
+    echo "wordpress.sh -> Tuning things up, setting debug mode for dev..."
+    wp config set WP_DEBUG true --raw --path="/var/www/html" --allow-root
+    wp config set WP_DEBUG_LOG true --raw --path="/var/www/html" --allow-root
 
     echo "wordpress.sh -> Adding a dash of user spice..."
     # Create a new WordPress user with given credentials

@@ -13,6 +13,13 @@ RUN apt-get update && \
 	mariadb-client \
     php8.2 \
     php8.2-fpm \
+    php8.2-common \
+    php8.2-gmp \
+    php8.2-xmlrpc \
+    php8.2-cli \
+    php8.2-zip \
+    php8.2-soap \
+    php8.2-imap \
     php8.2-mysqli \
     php8.2-curl \
     php8.2-xml \
@@ -23,6 +30,8 @@ RUN apt-get update && \
     php8.2-mbstring \
     php8.2-gd \
     curl \
+	sendmail \
+	procps \
     wget && \
     rm -rf /var/lib/apt/lists/*
 
@@ -45,10 +54,11 @@ COPY tools/wordpress.sh /usr/local/bin/wordpress.sh
 
 RUN chmod 755 /usr/local/bin/wordpress.sh
 
+RUN mkdir -p /var/www/wordpress
 # Set ownership/permissions
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html
+RUN chown -R www-data:www-data /var/www/ \
+    && chmod -R 755 /var/www/ && chown -R www-data:www-data /var/log
 
 EXPOSE 9000
-
+USER www-data
 CMD /usr/local/bin/wordpress.sh

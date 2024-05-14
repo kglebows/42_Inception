@@ -12,7 +12,7 @@ RUN apt-get update && \
     apt-get install -y \
 	mariadb-client \
     php8.2 \
-    # php8.2-fpm \
+    php8.2-fpm \
     # php8.2-common \
     # php8.2-gmp \
     # php8.2-xmlrpc \

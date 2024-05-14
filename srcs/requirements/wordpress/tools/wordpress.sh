@@ -6,7 +6,7 @@ if ! wp core is-installed --path="/var/www/html" --allow-root; then
 
     echo "wordpress.sh -> No signs of WordPress, let's set it up..."
     # Generate WordPress configuration with DB environment variables
-    wp config create --dbname="$MYSQL_DATABASE" --dbuser="$MYSQL_USER" --dbpass="$MYSQL_PASSWORD" --dbhost="$DB_HOST" --path="/var/www/html" --allow-root --skip-check
+    wp config create --dbname="$MYSQL_DATABASE" --dbuser="$MYSQL_USER" --dbpass="$MYSQL_PASSWORD" --dbhost="mariadb:3306" --path="/var/www/html" --allow-root --skip-check
 
     echo "wordpress.sh -> Config in place! Installing the core..."
     # Install WordPress using the database credentials for the admin account

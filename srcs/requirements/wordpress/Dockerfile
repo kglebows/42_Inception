@@ -3,6 +3,9 @@ FROM debian:bookworm-slim
 # Set working directory
 WORKDIR /var/www/html
 
+ENV DEBIAN_FRONTEND noninteractive
+
+
 # Update package lists and install PHP and necessary extensions for WordPress
 RUN apt-get update && \
     # apt-get install -y --no-install-recommends apt-utils && \
@@ -22,6 +25,8 @@ RUN apt-get update && \
     curl \
     wget && \
     rm -rf /var/lib/apt/lists/*
+
+ENV DEBIAN_FRONTEND newt
 
 # Install WordPress
 RUN wget https://wordpress.org/latest.tar.gz \

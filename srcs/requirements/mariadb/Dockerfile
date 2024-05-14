@@ -1,5 +1,7 @@
 FROM debian:bookworm-slim
 
+ENV DEBIAN_FRONTEND noninteractive
+
 # Install necessary packages and configure environment
 RUN apt-get update && \
     # apt-get install -y --no-install-recommends apt-utils && \
@@ -7,6 +9,9 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir -p /var/run/mysqld /var/log/mysql && \
     chown -R mysql:mysql /var/run/mysqld /var/log/mysql
+
+ENV DEBIAN_FRONTEND newt
+
 
 # Copy configuration files and scripts
 COPY conf/my.cnf /etc/mysql/mariadb.conf.d/my.cnf

@@ -1,5 +1,8 @@
 FROM debian:bookworm-slim
 
+ENV DEBIAN_FRONTEND noninteractive
+
+
 # Prep
 RUN apt-get update && \
 	# apt-get install -y --no-install-recommends apt-utils && \
@@ -7,12 +10,16 @@ RUN apt-get update && \
 	nginx \
 	openssl
 
+ENV DEBIAN_FRONTEND newt
+
 # SSL Setup
 RUN mkdir /etc/nginx/ssl && \
 	openssl req -x509 -nodes -days 31 -newkey rsa:2048 \
 	-keyout /etc/nginx/ssl/nginx.key \
 	-out /etc/nginx/ssl/nginx.crt \
 	-subj "/CN=kglebows.42.fr"
+
+
 
 # Conf Setup
 RUN rm /etc/nginx/sites-available/default

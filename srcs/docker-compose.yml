@@ -1,16 +1,18 @@
+version: '3.8'
+
 networks:
-  inception:
-    name: net
+  dockernet:
+    name: inception
 
 services:
   nginx:
     build: ./requirements/nginx
-    restart: always
     container_name: nginx
+    restart: always
     ports:
       - "443:443"
     networks:
-      - net
+      - dockernet
     depends_on:
       - wordpress
   
@@ -18,36 +20,47 @@ services:
     build: ./requirements/wordpress
     container_name: wordpress
     restart: always
-    ports:
-      - "9000:9000"
+    expose:
+      - "9000"
     networks:
-      - net
+      - dockernet
     environment:
-      - DOMAIN_NAME=${DOMAIN_NAME}
-      - DB_HOST=${DB_HOST}
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - ROOT_PASSWORD=${ROOT_PASSWORD}
-      - WP_USER=${WP_USER}
-      - WP_PASSWORD=${WP_PASSWORD}
-    depends_on:
-      - mariadb
+      DOMAIN_NAME: ${DOMAIN_NAME}
+      DB_HOST: ${DB_HOST}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      WP_USER: ${WP_USER}
+      WP_PASSWORD: ${WP_PASSWORD}
+    volumes:
+      - wp-data:/var/www/html
 
   mariadb:
     build: ./requirements/mariadb
-    restart: always
     container_name: mariadb
-    ports:
-      - "3306:3306"
+    restart: always
+    expose:
+      - "3306"
     networks:
-      - net
+      - dockernet
     environment:
-      - DOMAIN_NAME=${DOMAIN_NAME}
-      - DB_HOST=${DB_HOST}
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - ROOT_PASSWORD=${ROOT_PASSWORD}
-      - WP_USER=${WP_USER}
-      - WP_PASSWORD=${WP_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  wp-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/kglebows/data/wp-data
+      o: bind
+  db-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/kglebows/data/db-data
+      o: bind

@@ -13,7 +13,6 @@ RUN apt-get update && \
     php8.2 \
     php8.2-fpm \
     php8.2-mysqli \
-    php8.2-json \
     php8.2-curl \
     php8.2-xml \
     php8.2-intl \

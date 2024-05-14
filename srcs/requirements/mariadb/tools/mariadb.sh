@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "mariadb.sh -> Checking if the database is already initialized..."
-if [ ! -d "/var/lib/mysql/$MYSQL_DATABASE" ]; then
+if [ ! -d "/var/lib/mysql/mysql" ]; then
     echo "mariadb.sh -> Database not found, initializing new database setup..."
     mysql_install_db --user=root --datadir=/var/lib/mysql
 

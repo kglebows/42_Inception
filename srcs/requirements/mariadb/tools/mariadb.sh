@@ -23,7 +23,7 @@ if [ ! -d "/var/lib/mysql/wordpress" ]; then
     
     # if [ -f "/usr/local/bin/mariadb.sql" ]; then
         echo "mariadb.sh -> Executing SQL setup script..."
-        mysql --bootstrap -uroot < /usr/local/bin/startup.sql
+        mysql -uroot < /usr/local/bin/startup.sql
     # fi
 
     echo "mariadb.sh -> Initial setup complete, stopping MariaDB..."

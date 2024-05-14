@@ -4,9 +4,9 @@ FROM debian:bookworm-slim
 RUN apt-get update && \
 	apt-get install -y \
 	nginx \
-	openssl \
-	net-tools \
-	procps && \
+	openssl && \
+	# net-tools \
+	# procps && \
 	rm /etc/nginx/sites-available/default && \
 	rm /etc/nginx/sites-enabled/default
 

@@ -1,5 +1,8 @@
 FROM debian:bookworm-slim
 
+ENV DEBIAN_FRONTEND noninteractive
+
+
 # Prep
 RUN apt-get update && \
 	apt-get install -y \
@@ -10,6 +13,8 @@ RUN apt-get update && \
 	rm /etc/nginx/sites-available/default && \
 	rm /etc/nginx/sites-enabled/default
 
+	ENV DEBIAN_FRONTEND newt
+
 
 # SSL Setup
 RUN mkdir /etc/nginx/ssl && \
@@ -19,7 +24,7 @@ RUN mkdir /etc/nginx/ssl && \
 	-subj "/CN=kglebows.42.fr"
 
 # Conf Setup
-COPY conf/default.conf /etc/nginx/sites-available/default
+COPY conf/nginx.conf /etc/nginx/sites-available/default
 
 RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default && \
 	chmod 777 /etc/nginx/ssl/* && \

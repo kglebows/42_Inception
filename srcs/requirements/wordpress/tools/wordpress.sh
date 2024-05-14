@@ -27,7 +27,6 @@ if ! wp core is-installed --path="/var/www/html" --allow-root; then
     echo "wordpress.sh -> Adding a dash of user spice..."
     # Create a new WordPress user with given credentials
     wp user create "$WP_USER" user@42.fr --role=author --user_pass="$WP_PASSWORD" --path="/var/www/html" --allow-root
-	wp theme install --allow-root dark-mode --activate
 
     echo "wordpress.sh -> All set! WordPress is installed and configured!"
 else

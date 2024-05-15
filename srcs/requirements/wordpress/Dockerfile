@@ -28,7 +28,7 @@ RUN apt-get update && \
     # php8.2-xmlreader \
     # php8.2-ctype \
     # php8.2-mbstring \
-    # php8.2-gd \
+    php8.2-gd \
     curl \
 	# sendmail \
 	# procps \

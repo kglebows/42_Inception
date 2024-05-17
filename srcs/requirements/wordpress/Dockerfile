@@ -1,14 +1,9 @@
 FROM debian:bookworm-slim
 
-# Set working directory
 WORKDIR /var/www/html
 
 ENV DEBIAN_FRONTEND noninteractive
-
-
-# Update package lists and install PHP and necessary extensions for WordPress
 RUN apt-get update && \
-    # apt-get install -y --no-install-recommends apt-utils && \
     apt-get install -y \
 	mariadb-client \
     php8.2 \
@@ -30,11 +25,8 @@ RUN apt-get update && \
     # php8.2-mbstring \
     php8.2-gd \
     curl \
-	# sendmail \
-	# procps \
     wget && \
     rm -rf /var/lib/apt/lists/*
-
 ENV DEBIAN_FRONTEND newt
 
 # Install WordPress
@@ -48,16 +40,12 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
     && chmod +x wp-cli.phar \
     && mv wp-cli.phar /usr/local/bin/wp
 
-# Configure PHP-FPM
 COPY conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 COPY tools/wordpress.sh /usr/local/bin/wordpress.sh
 
-RUN chmod 755 /usr/local/bin/wordpress.sh
-
-RUN mkdir -p /var/www/wordpress
-# Set ownership/permissions
-RUN chown -R www-data:www-data /var/www/ \
-    && chmod -R 755 /var/www/ && chown -R www-data:www-data /var/log
+RUN chmod 755 /usr/local/bin/wordpress.sh && \
+	chown -R www-data:www-data /var/www/ && \
+    chmod -R 755 /var/www/ && chown -R www-data:www-data /var/log
 
 EXPOSE 9000
 USER www-data

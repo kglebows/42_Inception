@@ -25,6 +25,9 @@ fclean: clean
 subject:
 	docker stop $$(docker ps -qa); docker rm $$(docker ps -qa); docker rmi -f $$(docker images -qa); docker volume rm $$(docker volume ls -q); docker network rm $$(docker network ls -q) 2>/dev/null
 
+copyenv:
+	cp ../Secrets/.env srcs/.env
+
 re: fclean build up
 
-.PHONY: all build up down clean fclean re subject
+.PHONY: all build up down clean fclean re subject copyenv
